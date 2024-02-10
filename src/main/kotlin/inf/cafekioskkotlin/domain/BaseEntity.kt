@@ -21,3 +21,4 @@ abstract class BaseEntity {
     var modifiedDate: LocalDateTime = LocalDateTime.now()
         protected set
 }
+
