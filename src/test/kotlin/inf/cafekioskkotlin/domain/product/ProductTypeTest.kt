@@ -1,34 +1,29 @@
 package inf.cafekioskkotlin.domain.product
 
+import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.shouldBe
-import org.junit.jupiter.api.DisplayName
-import org.junit.jupiter.api.Test
 
-class ProductTypeTest {
-
-    @DisplayName("상품 타입이 재고 관련 타입인지를 체크한다.")
-    @Test
-    fun containsStockType() {
-        // given
+class ProductTypeTest : BehaviorSpec({
+    given("재고 관련 타입이 아닌 상품 타입이 주어지면") {
         val productType = ProductType.HANDMADE
 
-        // when
-        val result = ProductType.containsStockType(productType)
-
-        // then
-        result shouldBe false
-    }
-
-    @DisplayName("상품 타입이 재고 관련 타입인지를 체크한다.")
-    @Test
-    fun containsStockType2() {
-        // given
-        val productTypes = listOf(ProductType.BOTTLE, ProductType.BAKERY)
-
-        // when & then
-        productTypes.forAll {
-            ProductType.containsStockType(it) shouldBe true
+        `when`("재고 관련 타입인지 체크할 때") {
+            val result = ProductType.containsStockType(productType)
+            then("타입 체크에 성공한다.") {
+                result shouldBe false
+            }
         }
     }
-}
+
+    given("재고 관련 타입인 상품 타입이 주어지면") {
+        val productTypes = listOf(ProductType.BOTTLE, ProductType.BAKERY)
+        `when`("재고 관련 타입인지 체크할 때") {
+            then("타입 체크에 성공한다.") {
+                productTypes.forAll {
+                    ProductType.containsStockType(it) shouldBe true
+                }
+            }
+        }
+    }
+})
